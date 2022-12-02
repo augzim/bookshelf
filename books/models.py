@@ -11,7 +11,7 @@ class Book(models.Model):
     genre = models.ManyToManyField('Genre')
     publisher = models.CharField(max_length=100)
     description = models.TextField(max_length=5000, )
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2, help_text='Price in USD')
     quantity = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='amount')
 
     LANGUAGES = (
@@ -37,11 +37,11 @@ class Book(models.Model):
     isbn = models.CharField(
         max_length=17,
         verbose_name='ISBN-10/13',
-        help_text='Correct ISBN format: (XXX-)X-XXXXXX-XX-X.\nIf prefix exists remove parenthesis',
+        help_text='Correct ISBN format: (XXX-)XXXXXXXXXX. If prefix exists remove parenthesis',
         db_index=True,
         validators=[
             validators.RegexValidator(
-                regex=r'(?:\d{3}-)?\d-\d{6}-\d{2}-\d',
+                regex=r'(?:\d{3}-)?\d{10}',
                 message='Please, see correct ISBN format above',
             )
         ],
@@ -51,9 +51,8 @@ class Book(models.Model):
         return self.title
 
     def is_available(self):
-        return f'{self.title} ({self.isbn}) is AVAILABLE' if self.quantity \
-                else f'{self.title} ({self.isbn}) is NOT currently AVAILABLE. ' \
-                     f'Expected time of receipt: {str(date.today() + timedelta(days=14))}'
+        return f'YES' if self.quantity else \
+            f'Expected Time of Receipt: {str(date.today() + timedelta(days=14))}'
 
     def get_absolute_url(self):
         return f'/books/{self.pk}/'
@@ -83,9 +82,14 @@ class Review(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
-    country = models.CharField(max_length=100, verbose_name='Country', blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
