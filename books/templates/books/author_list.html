@@ -1,0 +1,12 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+  Authors
+{% endblock title %}
+
+{% block content %}
+  <h1>Authors</h1>
+  {% for author in object_list %}
+    <h2><a href="{{ author.get_absolute_url }}">{{ author.name }}</a></h2>
+  {% endfor %}
+{% endblock content %}

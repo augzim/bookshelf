@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}
+        Default Page Name
+      {% endblock title %}
+    </title>
+  </head>
+  <body>
+
+    <nav>
+      <a href="#">Home</a> |
+      <a href="{% url 'author_list' %}">Authors</a> |
+      <a href="{% url 'book_list' %}">Books</a> |
+      <a href="{% url 'genre_list' %}">Genres</a> |
+      <a href="#">Login</a>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+    <footer>
+      The current date (year) and some site-related info will be displayed here. Stay tuned!
+    </footer>
+  </body>
+</html>

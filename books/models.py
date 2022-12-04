@@ -1,7 +1,9 @@
 from datetime import date, timedelta
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core import validators
+from django.urls import reverse
 
 
 class Book(models.Model):
@@ -55,7 +57,7 @@ class Book(models.Model):
             f'Expected Time of Receipt: {str(date.today() + timedelta(days=14))}'
 
     def get_absolute_url(self):
-        return f'/books/{self.pk}/'
+        return reverse('book_detail', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['title', ]
@@ -82,9 +84,16 @@ class Review(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
+    about = models.TextField(max_length=3000, null=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('author_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['name']
 
 
 class Genre(models.Model):
@@ -93,3 +102,9 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('genre_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['name']

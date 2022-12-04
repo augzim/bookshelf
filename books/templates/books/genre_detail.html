@@ -1,0 +1,23 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+  {{ genre.name }}
+{% endblock title%}
+
+{% block content %}
+
+  <h1>{{ genre.name }}</h1>
+  {{ genre.description }}
+
+  <h2>Most popular books of this genre:</h2>
+
+    {% for book in books %}
+      <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+      <p>{{ book.description }}</p>
+      <h4>
+        Author: <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a> |
+        Print length: {{ book.pages }} | ISBN: {{ book.isbn }}
+      </h4>
+    {% endfor %}
+
+{% endblock content %}

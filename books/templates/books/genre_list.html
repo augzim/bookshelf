@@ -1,0 +1,12 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+  Genres
+{% endblock title %}
+
+{% block content %}
+  <h1>Genres</h1>
+  {% for genre in object_list %}
+    <h2><a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a></h2>
+  {% endfor %}
+{% endblock content %}

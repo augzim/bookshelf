@@ -1,0 +1,55 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+  {{ book.title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>{{ book.title }}</h1>
+  <p>{{ book.description }}</p>
+
+  {% if reviews %}
+    <h2>Reviews:</h2>
+    {% for review in reviews %}
+      <h2><b><em>{{ review.title }}</em></b></h2>
+      {{ review.description }}
+    {% endfor %}
+  {% endif %}
+
+  <h2>Book Details:</h2>
+  <ul>
+    <li><h4>Author: <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></h4></li>
+    <li><h4>Language: {{ book.get_language_display }}</h4></li>
+    <li><h4>Book Cover: {{ book.get_cover_display }}</h4></li>
+    <li><h4>Print length: {{ book.pages }} pages</h4></li>
+    <li><h4>
+    {% if book.genre.count == 1 %}Genre: {% else %}Genres: {% endif %}
+      {% for genre in book.genre.all %}
+        {% if genre == book.genre.last %}
+          <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+        {% else %}
+          <a href="{{ genre.get_absolute_url }}">{{ genre.name }}, </a>
+        {% endif %}
+      {% endfor %}
+    </h4></li>
+    <li><h4>Publisher: {{ book.publisher }}</h4></li>
+    <li><h4>Price: {{ book.price }}$</h4></li>
+    {% if book.quantity <= 5 %}
+      <li><h4>Only {{ book.quantity }} books are left. Buy while it is still available.
+        <a href="#">Buy now</a>
+      </h4></li>
+    {% else %}
+      <li><h4>Quantity: {{ book.quantity }}</h4></li>
+    {% endif %}
+    <li><h4>ISBN: {{ book.isbn }}</h4></li>
+  </ul>
+
+<!--  {% if book.author.book_set.all.count %}-->
+<!--    <h2>Related Books:</h2>-->
+<!--      {% for related_book in book.author.book_set.all %}-->
+<!--        {% if related_book.isbn != book.isbn %}-->
+<!--          <a href="{{ related_book.get_absolute_url }}">{{ related_book.title }} </a>-->
+<!--        {% endif %}-->
+<!--      {% endfor %}-->
+<!--  {% endif %}-->
+{% endblock content %}

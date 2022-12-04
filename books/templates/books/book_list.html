@@ -1,0 +1,27 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+  Books
+{% endblock title %}
+
+{% block content %}
+  <header><h1>Books</h1></header>
+  {% for book in object_list %}
+    <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
+<!-- remove all styling and make it using style.css files-->
+<!--    <ul style="list-style: none;">-->
+    <ul>
+      <li><h4>
+      {% if book.genre.count > 1 %}Genres: {% else %}Genre: {% endif %}
+        {% for genre in book.genre.all %}
+          {% if genre == book.genre.last %}
+            <a href="{{ genre.get_absolute_url }}">{{ genre }}</a>
+          {% else %}
+            <a href="{{ genre.get_absolute_url }}">{{ genre }}, </a>
+          {% endif %}
+        {% endfor %}
+      </h4></li>
+      <li><h4>Author: <a href="{{ book.author.get_absolute_url }}" >{{ book.author }}</a></h4></li>
+    </ul>
+  {% endfor %}
+{% endblock content %}
