@@ -2,10 +2,10 @@ from django.urls import path
 
 from .models import Book
 from .views import (
-        AuthorDetailView, AuthorListView,
-        BookDetailView, BookListView,
-        GenreDetailView, GenreListView,
-    )
+    AuthorDetailView, AuthorListView,
+    BookDetailView, BookListView,
+    GenreDetailView, GenreListView,
+)
 
 
 urlpatterns = [

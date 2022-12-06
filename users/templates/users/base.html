@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block title %}TITLE{% endblock title %}
+
+{% block content %}
+  <h1>{% block header %}HEADER{% endblock header %}</h1>
+  {% block before_form %}{% endblock before_form %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% block button %}BUTTON{% endblock button %}</button>
+  </form>
+{% endblock content %}

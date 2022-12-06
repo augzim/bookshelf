@@ -1,4 +1,4 @@
-{% extends 'books/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   {{ book.title }}
@@ -34,13 +34,18 @@
     </h4></li>
     <li><h4>Publisher: {{ book.publisher }}</h4></li>
     <li><h4>Price: {{ book.price }}$</h4></li>
-    {% if book.quantity <= 5 %}
-      <li><h4>Only {{ book.quantity }} books are left. Buy while it is still available.
+    <li><h4>
+      {% if book.quantity > 0 %}
+        {% if book.quantity <= 5 %}
+          Only {{ book.quantity }} books are left. Buy while it is still available.
+        {% else %}
+          {{ book.quantity }} books are available at the moment.
+        {% endif %}
         <a href="#">Buy now</a>
-      </h4></li>
-    {% else %}
-      <li><h4>Quantity: {{ book.quantity }}</h4></li>
-    {% endif %}
+      {% else %}
+        Unfortunately, this book is not available at the moment.
+      {% endif %}
+    </h4></li>
     <li><h4>ISBN: {{ book.isbn }}</h4></li>
   </ul>
 
