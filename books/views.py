@@ -20,7 +20,6 @@ class BookListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['reviews'] = Review.objects.all()
-        print(context)
         return context
 
 
