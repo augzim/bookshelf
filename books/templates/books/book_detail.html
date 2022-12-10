@@ -23,8 +23,10 @@
         </p>
       {% endif %}
       <p><b>
-        {{ review.author }} | {{ review.get_mark_display|upper }} |
-        {{ review.created }} | {{ review.edited }}
+        author: {{ review.author }} |
+        mark: {{ review.get_mark_display|upper }} |
+        created: {{ review.created|date:'d.m.Y H:i:s' }} |
+        edited: {{ review.edited|date:'d.m.Y H:i:s' }}
       </b></p>
       <p>{{ review.description }}</p>
     {% endfor %}
