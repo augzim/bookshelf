@@ -81,6 +81,12 @@ class Review(models.Model):
 
     mark = models.PositiveSmallIntegerField(choices=MARKS, verbose_name='Rating')
 
+    def get_absolute_url(self):
+        return reverse('book_detail', kwargs={'pk': self.book.pk})
+
+    class Meta:
+        ordering = ['-edited']
+
 
 class Author(models.Model):
     name = models.CharField(max_length=100)

@@ -8,11 +8,25 @@
   <h1>{{ book.title }}</h1>
   <p>{{ book.description }}</p>
 
+  <h2>
+    <a href="{% url 'review_create' book.pk %}">Add review</a>
+  </h2>
+
   {% if reviews %}
     <h2>Reviews:</h2>
     {% for review in reviews %}
       <h2><b><em>{{ review.title }}</em></b></h2>
-      {{ review.description }}
+      {% if review.author == user %}
+        <p>
+          <a href="{% url 'review_delete' review.pk %}">Delete</a> |
+          <a href="{% url 'review_edit' review.pk %}">Edit</a>
+        </p>
+      {% endif %}
+      <p><b>
+        {{ review.author }} | {{ review.get_mark_display|upper }} |
+        {{ review.created }} | {{ review.edited }}
+      </b></p>
+      <p>{{ review.description }}</p>
     {% endfor %}
   {% endif %}
 
