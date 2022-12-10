@@ -19,6 +19,7 @@ class BookDetailView(DetailView):
 
 
 class BookListView(ListView):
+    paginate_by = 10
     model = Book
 
     def get_context_data(self, **kwargs):
@@ -45,6 +46,7 @@ class AuthorDetailView(DetailView):
 
 
 class AuthorListView(ListView):
+    paginate_by = 10
     model = Author
 
 
