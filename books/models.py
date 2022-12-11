@@ -14,7 +14,10 @@ class Book(models.Model):
     publisher = models.CharField(max_length=100)
     description = models.TextField(max_length=5000, )
     price = models.DecimalField(max_digits=8, decimal_places=2, help_text='Price in USD')
-    quantity = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='amount')
+    quantity = models.PositiveSmallIntegerField(
+        null=True, blank=True, verbose_name='amount'
+    )
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
 
     LANGUAGES = (
         ('en', 'English'),
@@ -57,7 +60,7 @@ class Book(models.Model):
             f'Expected Time of Receipt: {str(date.today() + timedelta(days=14))}'
 
     def get_absolute_url(self):
-        return reverse('book_detail', kwargs={'pk': self.pk})
+        return reverse('book_detail', kwargs={'book_slug': self.slug})
 
     class Meta:
         ordering = ['title', ]
@@ -82,7 +85,7 @@ class Review(models.Model):
     mark = models.PositiveSmallIntegerField(choices=MARKS, verbose_name='Rating')
 
     def get_absolute_url(self):
-        return reverse('book_detail', kwargs={'pk': self.book.pk})
+        return reverse('book_detail', kwargs={'book_slug': self.book.slug})
 
     class Meta:
         ordering = ['-edited']
@@ -91,12 +94,13 @@ class Review(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=100)
     about = models.TextField(max_length=3000, null=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('author_detail', kwargs={'pk': self.pk})
+        return reverse('author_detail', kwargs={'author_slug': self.slug})
 
     class Meta:
         ordering = ['name']
@@ -105,12 +109,13 @@ class Author(models.Model):
 class Genre(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('genre_detail', kwargs={'pk': self.pk})
+        return reverse('genre_detail', kwargs={'genre_slug': self.slug})
 
     class Meta:
         ordering = ['name']

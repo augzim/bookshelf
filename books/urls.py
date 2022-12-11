@@ -9,13 +9,29 @@ from .views import (
 
 
 urlpatterns = [
-    path('genres/<int:pk>', GenreDetailView.as_view(), name='genre_detail'),
+    path('genres/<slug:genre_slug>', GenreDetailView.as_view(), name='genre_detail'),
     path('genres/', GenreListView.as_view(), name='genre_list'),
-    path('authors/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
+    path('authors/<slug:author_slug>/', AuthorDetailView.as_view(), name='author_detail'),
     path('authors/', AuthorListView.as_view(), name='author_list'),
-    path('<int:pk>/reviews/create/', ReviewCreateView.as_view(), name='review_create'),
-    path('<int:pk>/reviews/delete/', ReviewDeleteView.as_view(), name='review_delete'),
-    path('<int:pk>/reviews/edit/', ReviewUpdateView.as_view(), name='review_edit'),
-    path('<int:pk>/', BookDetailView.as_view(), name='book_detail'),
+
+    path(
+        '<slug:book_slug>/reviews/create/',
+        ReviewCreateView.as_view(),
+        name='review_create'
+    ),
+
+    path(
+        '<slug:book_slug>/reviews/<int:review_pk>/delete/',
+        ReviewDeleteView.as_view(),
+        name='review_delete'
+    ),
+
+    path(
+        '<slug:book_slug>/reviews/<int:review_pk>/edit/',
+        ReviewUpdateView.as_view(),
+        name='review_edit'
+    ),
+
+    path('<slug:book_slug>/', BookDetailView.as_view(), name='book_detail'),
     path('', BookListView.as_view(), name='book_list'),
 ]

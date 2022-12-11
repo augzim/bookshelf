@@ -9,7 +9,7 @@
   <p>{{ book.description }}</p>
 
   <h2>
-    <a href="{% url 'review_create' book.pk %}">Add review</a>
+    <a href="{% url 'review_create' book.slug %}">Add review</a>
   </h2>
 
   {% if reviews %}
@@ -18,8 +18,8 @@
       <h2><b><em>{{ review.title }}</em></b></h2>
       {% if review.author == user %}
         <p>
-          <a href="{% url 'review_delete' review.pk %}">Delete</a> |
-          <a href="{% url 'review_edit' review.pk %}">Edit</a>
+          <a href="{% url 'review_delete' review.book.slug review.pk %}">Delete</a> |
+          <a href="{% url 'review_edit' review.book.slug review.pk %}">Edit</a>
         </p>
       {% endif %}
       <p><b>
